@@ -36,7 +36,7 @@ jobs:
 
         # Checkout GitOps repository
         git clone https://github.com/KasifZisan/k8s-gitops-dev.git
-        
+
         echo "cd-ing into k8s-gitops-dev"
         cd k8s-gitops-dev
 
@@ -48,6 +48,6 @@ jobs:
         git config --global user.email "actions@github.com"
 
         # Commit and push the updated kustomization.yaml
-        git add overlays/dev/kustomization.yaml
+        git add kustomization.yaml
         git commit -m "Update image to ${IMAGE_NAME}"
         git push origin main
