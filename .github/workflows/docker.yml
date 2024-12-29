@@ -36,7 +36,7 @@ jobs:
 
         # Checkout GitOps repository
         git clone https://github.com/KasifZisan/k8s-gitops-dev.git
-        cd gitops-repo
+        cd k8s-gitops-dev
 
         # Use kustomize to update the image in the kustomization.yaml
         kustomize edit set image kasifzisandocker/flask-app="${IMAGE_NAME}"
