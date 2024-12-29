@@ -44,8 +44,8 @@ jobs:
         ls -R
 
         # Navigate to the correct overlay directory
-        echo "Navigating into overlays"
-        cd overlays
+        echo "Navigating into overlays/dev"
+        cd overlays/dev
 
 
 
