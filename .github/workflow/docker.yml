@@ -1,0 +1,51 @@
+name: Build and Deploy Docker Image
+
+on:
+  push:
+    branches:
+      - dev
+      - stg
+      - main  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push Docker image
+      run: |
+        IMAGE_NAME=${{ github.ref_name }}/kasifzisandocker/flask-app:${{ github.sha }}  
+        docker build -t $IMAGE_NAME .
+        docker push $IMAGE_NAME
+
+    - name: Update Kustomize overlays
+    run: |
+        IMAGE_NAME="${{ github.ref_name }}/kasifzisandocker/flask-app:${{ github.sha }}"
+
+        # Checkout GitOps repository
+        git clone https://github.com/KasifZisan/k8s-gitops-dev.git
+        cd gitops-repo
+
+        # Use kustomize to update the image in the kustomization.yaml
+        kustomize edit set image kasifzisandocker/flask-app="${IMAGE_NAME}"
+
+        # Git config for commit
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+
+        # Commit and push the updated kustomization.yaml
+        git add overlays/dev/kustomization.yaml
+        git commit -m "Update image to ${IMAGE_NAME}"
+        git push origin main
