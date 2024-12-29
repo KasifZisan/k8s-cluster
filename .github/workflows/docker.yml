@@ -24,11 +24,11 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build and push Docker image
-      run: |
-        IMAGE_NAME=kasifzisandocker/flask-app:${{ github.sha }}  
-        docker build -t $IMAGE_NAME .
-        docker push $IMAGE_NAME
+    # - name: Build and push Docker image
+    #   run: |
+    #     IMAGE_NAME=kasifzisandocker/flask-app:${{ github.sha }}  
+    #     docker build -t $IMAGE_NAME .
+    #     docker push $IMAGE_NAME
 
     - name: Update Kustomize overlays
       run: |
@@ -37,6 +37,10 @@ jobs:
         # Checkout GitOps repository
         git clone https://github.com/KasifZisan/k8s-gitops-dev.git
         cd k8s-gitops-dev
+
+        # Print the directory structure to check for overlays/dev
+        echo "Listing directory structure:"
+        ls -R
 
         # Navigate to the correct overlay directory
         cd overlays/dev
