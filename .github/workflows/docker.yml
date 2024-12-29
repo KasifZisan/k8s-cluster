@@ -36,18 +36,9 @@ jobs:
 
         # Checkout GitOps repository
         git clone https://github.com/KasifZisan/k8s-gitops-dev.git
+        
         echo "cd-ing into k8s-gitops-dev"
         cd k8s-gitops-dev
-
-        # Print the directory structure to check for overlays/dev
-        echo "Listing directory structure:"
-        ls -R
-
-        # Navigate to the correct overlay directory
-        echo "Navigating into overlays/dev"
-        cd overlays/dev
-
-
 
         # Use kustomize to update the image in the kustomization.yaml
         kustomize edit set image kasifzisandocker/flask-app="${IMAGE_NAME}"
