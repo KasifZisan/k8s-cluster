@@ -48,7 +48,7 @@ jobs:
         git config --global user.email "actions@github.com"
 
         # Authenticate using GitHub Actions token (use HTTPS with token authentication)
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/KasifZisan/k8s-gitops-dev.git
+        git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/KasifZisan/k8s-gitops-dev.git
 
         # Commit and push the updated kustomization.yaml
         git add kustomization.yaml
