@@ -32,7 +32,7 @@ jobs:
 
     - name: Update Kustomize overlays
       run: |
-        IMAGE_NAME="${{ github.ref_name }}/kasifzisandocker/flask-app:${{ github.sha }}"
+        IMAGE_NAME="kasifzisandocker/flask-app:${{ github.sha }}"
 
         # Checkout GitOps repository
         git clone https://github.com/KasifZisan/k8s-gitops-dev.git
